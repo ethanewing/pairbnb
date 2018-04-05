@@ -1,0 +1,24 @@
+<%= form_with(model: listing, local: true) do |form| %>
+  <div class="field">
+    <%= form.label :address %>
+    <%= form.text_field :address, id: :listing_address %>
+  </div>
+
+  <div class="field">
+    <%= form.label :max_guests %>
+    <%= form.text_area :max_guests, id: :listing_max_guests %>
+  </div>
+
+  <div class="field">
+    <%= form.label :bedrooms %>
+    <%= form.text_area :bedrooms, id: :listing_bedrooms %>
+  </div>
+
+  <div class="field">
+    <%= form.label :amenities %>
+    <%= form.text_area :amenities, id: :listing_amenities %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

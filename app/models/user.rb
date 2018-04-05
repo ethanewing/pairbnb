@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   include Clearance::User
+
+  include Clearance::User
   validates :username, uniqueness: true
   validates :email, uniqueness: true
   validates :encrypted_password, uniqueness: true

@@ -1,0 +1,27 @@
+<h1>Listings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Address</th>
+      <th>Max Guests</th>
+      <th>Bedrooms</th>
+      <th>Amenities</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @listings.each do |listing| %>
+      <tr>
+        <td><%= listing.address %></td>
+        <td><%= listing.max_guests %></td>
+        <td><%= listing.bedrooms %></td>
+        <td><%= listing.amenities %></td>
+        <td><input type="button" value="Book now!"></input></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
