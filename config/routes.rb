@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
+  get 'braintree/:id/new' => "braintree#new", as: "braintree_new"
+  post 'braintree/checkout'
+
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
   resource :session, controller: "clearance/sessions", only: [:create]
+  resources :users, controller: "users", only: [:edit, :update, :show]
+  resources :reservations, only: [:create]
 
   resources :users, controller: "clearance/users", only: [:create] do
     resource :password,
@@ -8,7 +13,7 @@ Rails.application.routes.draw do
       only: [:create, :edit, :update]
   end
 
-  resources :listings, only: [:create, :new, :index]
+  resources :listings, only: [:create, :new, :index, :update, :destroy]
 
   get "/sign_in" => "clearance/sessions#new", as: "sign_in"
   delete "/sign_out" => "clearance/sessions#destroy", as: "sign_out"
@@ -16,4 +21,8 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get "/auth/:provider/callback" => "sessions#create_from_omniauth"
   root "welcome#index"
+
+  get "/listings/:id/verify" => "listings#verify", as: "verify"
+
+  get "/reservations/:id/new" => "reservations#new", as: "new_reservation"
 end

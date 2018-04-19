@@ -2,23 +2,78 @@
 <html>
 <head>
   <%= javascript_include_tag 'application' %>
+  <%= stylesheet_link_tag 'application', media: "all" %>
   <%= csrf_meta_tag %>
 </head>
 <body>
-  <div id="header">
-    <% if signed_in? -%>
-      <%= button_to t(".sign_out"), sign_out_path, method: :delete %>
-    <% else -%>
-      <%= link_to t(".sign_in"), sign_in_path %>
-    <% end -%>
-  </div>
+  <div>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+      <a class="navbar-brand" href="<%= root_path %>">PairBnB</a>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="<%= root_path %>">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<%= listings_path %>">Listings</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Listings Filter Form
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <%= form_for :filter, url: listings_path, method: "get", html: {class: "form-inline"} do |form| %>
+
+              <%= form.label :max_price, "Maximum Price" %>
+              <%= form.text_field :max_price, class: "form-control mr-sm-1" %>
+
+              <%= form.label :baths %>
+              <%= form.text_field :baths, class: "form-control mr-sm-1" %>
+
+              <%= form.label :bedrooms %>
+              <%= form.text_field :bedrooms, class: "form-control mr-sm-1" %>
+
+              <%= form.submit "Filter", class: "btn btn-outline-success my-2 my-sm-0" %>
+            <% end %>
+          </div>
+        </li>
+        <%= form_for :search_location, url: listings_path, method: "get", html: {class: "form-inline"} do |form| %>
+          <%= form.text_field :location_tag, placeholder: "Search by tag or location!", style: "width: 300px;", class: "form-control mr-sm-1" %>
+          <%= form.submit "Search", class: "btn btn-outline-success my-2 my-sm-0" %>
+        <% end %>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="form-inline">
+          <% if signed_in? -%>
+            <span style="color: rgba(255, 255, 255, 0.5);"><%= "Signed in as #{current_user.email}" %></span>
+            <a href="<%= user_path(current_user.id) %>"><%= image_tag(current_user.avatar.url, id: "nav-profile-picture", height: "40", width: "40") %></a>
+            <%= button_to t(".sign_out"), sign_out_path, method: :delete, class: "navbar-btn btn-outline-light btn-sm" %>
+          <% else -%>
+            <%= link_to t(".sign_in"), sign_in_path, class: "nav-link" %>
+          <% end -%>
+        </li>
+      </ul>
+    </nav>
+  <div>
 
   <div id="flash">
     <% flash.each do |key, value| -%>
-      <div id="flash_<%= key %>"><%=h value %></div>
+      <div class="<%= flash_class(key) %>"><%= value %></div>
     <% end %>
   </div>
 
   <%= yield %>
 </body>
 </html>
+
+<style>
+  body {
+    padding-top: 65px;
+  }
+
+  #nav-profile-picture {
+    border-radius: 40px;
+    position: relative;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+</style>

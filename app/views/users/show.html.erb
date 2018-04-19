@@ -1,0 +1,92 @@
+<h2><%= "#{@user.username}'s Profile" %></h2>
+<div id="info" class="section">
+  <% if !@user.avatar.url.nil? %>
+    <%= image_tag(@user.avatar.url, id: "profile-picture", height: "400", width: "400") %>
+  <% end %>
+  <h5>Profile Information</h5>
+  <div class="info-field">
+    <%= "First name: #{@user.first_name}" %>
+  </div>
+  <div class="info-field">
+    <%= "Last name: #{@user.last_name}" %>
+  </div>
+  <div class="info-field">
+    <%= "Email: #{@user.email}" %>
+  </div>
+  <div class="info-field">
+    <%= "User status: #{@user.role}" %>
+  </div>
+  <div class="info-field">
+    <%= link_to "Edit Profile", edit_user_path(@user.id) %>
+  </div>
+</div>
+<div id="user-listings" class="section">
+  <h5>User's Listings</h5>
+  <% listings = Listing.where(user_id: @user.id) %>
+  <% if listings.length == 0 %>
+    <p>User does not own any listings</p>
+  <% else %>
+    <ul>
+    <% listings.each do |listing| %>
+      <li class="list">
+        <div class="form-inline" data-no-turbolink>
+          <span><%= "#{listing.address}" %></span>
+          <span style="position: relative; left: 10px;"><%= button_to "Delete Listing", {action: "destroy", controller: "listings", id: listing.id}, class: "btn btn-outline-secondary btn-sm", method: "delete", data: {confirm: "Are you sure?"} %></span>
+        </div>
+        <% reservations = Reservation.where(listing_id: listing.id) %>
+        <% if reservations.length > 0 %>
+          <ul>
+            <% reservations.each do |res| %>
+              <% tenant = User.find(res.user_id) %>
+              <li><%= "#{tenant.first_name} #{tenant.last_name} has a reservation here from #{res.start_date} to #{res.end_date}" %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </li>
+    <% end %>
+    </ul>
+  <% end %>
+</div>
+<div id="user-reservations" class="section">
+  <h5>User's Reservations</h5>
+  <% reservations = Reservation.where(user_id: @user.id) %>
+  <% if reservations.length == 0 %>
+    <p>User has not made any reservations</p>
+  <% else %>
+    <ul>
+    <% reservations.each do |res| %>
+      <% listing = Listing.find(res.listing_id) %>
+      <% address = listing.address %>
+      <% start_date = res.start_date %>
+      <% end_date = res.end_date %>
+      <li class="list"><%= "Reservation at #{address}, from #{start_date} to #{end_date}" %></li>
+    <% end %>
+    </ul>
+  <% end %>
+</div>
+<div>
+  <span><%= link_to "Home", "/" %></span>
+  <span><%= link_to "View listings", listings_path %></span>
+</div>
+
+<style>
+  p {
+    font-size: 14px;
+    position: relative;
+    left: 20px;
+  }
+
+  li.list {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  img {
+    border-radius: 40px;
+  }
+
+  .section {
+    margin: 10px;
+  }
+
+</style>

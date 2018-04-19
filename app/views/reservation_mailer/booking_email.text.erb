@@ -1,0 +1,10 @@
+Congrats, <%= "#{@host.first_name} #{@host.last_name}" %>! <%= "#{@customer.first_name} #{@customer.last_name}" %> has just made
+a reservation on the following property:
+
+<%= @listing.address %>
+
+for the following dates:
+
+<%= "\t#{@reservation.start_date}\n\t#{@reservation.end_date}" %>
+
+You can view the reservation on your profile here: <%= @url %>

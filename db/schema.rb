@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180405045450) do
+ActiveRecord::Schema.define(version: 20180410071733) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,20 @@ ActiveRecord::Schema.define(version: 20180405045450) do
     t.text "sleeping_arrangements"
     t.decimal "rate_in_usd", precision: 6, scale: 2
     t.string "tags", array: true
+    t.boolean "verified"
     t.index ["user_id"], name: "index_listings_on_user_id"
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.integer "num_guests"
+    t.bigint "user_id"
+    t.bigint "listing_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["listing_id"], name: "index_reservations_on_listing_id"
+    t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -52,6 +65,8 @@ ActiveRecord::Schema.define(version: 20180405045450) do
     t.datetime "updated_at", null: false
     t.string "confirmation_token", limit: 128
     t.string "remember_token", limit: 128
+    t.string "role"
+    t.string "avatar"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end

@@ -13,3 +13,7 @@
     </div>
   <% end %>
 </div>
+
+<% User.all.each do |user| %>
+<%= user.email %>
+<% end %>

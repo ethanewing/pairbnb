@@ -1,0 +1,4 @@
+<% if !@user.avatar.url.blank? %>
+  $("#profile-picture").attr("src", "<%= @user.avatar.url %>");
+  $("#nav-profile-picture").attr("src", "<%= @user.avatar.url %>");
+<% end %>

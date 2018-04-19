@@ -1,11 +1,42 @@
 <h1>PairBnB</h1>
 
+<div id="menu">
+  <% if signed_in? %>
+    <div id="signed-in">
+      <div id="profile-info">
+        <%= "Signed in as: #{current_user.email}" %>
+        <% if !current_user.avatar.url.nil? %>
+          <%= image_tag(current_user.avatar.url, id: "profile-picture", height: "40", width: "40") %>
+        <% end %>
+      </div>
+      <br>
+      <%= link_to "Create listing", new_listing_path %>
+      <br>
+      <%= link_to "Edit profile", edit_user_path(current_user) %>
+      <br>
+      <%= link_to "View profile", user_path(current_user.id) %>
+      <br>
+      <%= button_to "Sign out", sign_out_path, method: :delete %>
+    </div>
+  <% else %>
+    <%= link_to "Sign in", sign_in_path %>
+    <div>
+      <%= link_to "Sign in with Facebook", "/auth/facebook" %>
+    </div>
+  <% end %>
+</div>
+<div>
+  <%= link_to "View listings", listings_path %>
+</div>
 
-<% if signed_in? %>
-  <%= current_user.email %>
-  <%= link_to "Create listing", new_listing_path %>
-  <%= button_to "Sign out", sign_out_path, method: :delete %>
-<% else %>
-  <%= link_to "Sign in", sign_in_path %>
-<% end %>
-<%= link_to "Sign in with Facebook", "/auth/facebook" %>
+<style>
+  /* #profile-picture {
+    border-radius: 40px;
+    position: relative;
+    top: 15px;
+  } */
+
+  #menu {
+    margin-bottom: 15px;
+  }
+</style>

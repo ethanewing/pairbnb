@@ -1,22 +1,37 @@
-<%= form_with(model: listing, local: true) do |form| %>
+<%= form_for @listing, url: { action: "create"} do |form| %>
   <div class="field">
     <%= form.label :address %>
-    <%= form.text_field :address, id: :listing_address %>
+    <%= form.text_field :address, class: "form-control mr-sm-1 field" %>
   </div>
 
   <div class="field">
-    <%= form.label :max_guests %>
-    <%= form.text_area :max_guests, id: :listing_max_guests %>
+    <%= form.label :max_guests, "Max Guests" %>
+    <%= form.text_field :max_guests, class: "form-control mr-sm-1 field" %>
   </div>
 
   <div class="field">
     <%= form.label :bedrooms %>
-    <%= form.text_area :bedrooms, id: :listing_bedrooms %>
+    <%= form.text_field :bedrooms, class: "form-control mr-sm-1 field" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :baths %>
+    <%= form.text_field :baths, class: "form-control mr-sm-1 field" %>
   </div>
 
   <div class="field">
     <%= form.label :amenities %>
-    <%= form.text_area :amenities, id: :listing_amenities %>
+    <%= form.text_field :amenities, class: "form-control mr-sm-1 field" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tags, "Tags (separate with single space)" %>
+    <%= form.text_field :tags, class: "form-control mr-sm-1 field" %>
+
+  <div class="field">
+    <%= form.label :rate_in_usd, "Rate in USD" %>
+    <%= form.text_field :rate_in_usd, class: "form-control mr-sm-1 field" %>
+  </div>
 
   <div class="actions">
     <%= form.submit %>

@@ -59,3 +59,15 @@ gem 'figaro'
 
 gem 'omniauth-facebook'
 
+gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
+
+gem 'will_paginate', '~> 3.1.0'
+
+gem 'jquery-rails', '~> 4.3', '>= 4.3.1'
+
+gem 'carrierwave', '~> 1.0'
+
+gem 'braintree'
+
+gem 'autoprefixer-rails'
+gem 'bootstrap', '~> 4.1.0'
